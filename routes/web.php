@@ -33,7 +33,7 @@ $router->get('/auth/social', function() {
     $helper = $fb->getRedirectLoginHelper();
 
     $permissions = ['email']; // Optional permissions
-    $loginUrl = $helper->getLoginUrl('/auth/social/callback', $permissions);
+    $loginUrl = $helper->getLoginUrl('https://nameless-lowlands-17133.herokuapp.com/public/auth/social/callback', $permissions);
 
     echo '<a href="' . $loginUrl . '">Log in with Facebook!</a>';
 });
@@ -65,8 +65,6 @@ $router->get('/auth/social/callback', function() {
         'app_secret' => '9e9c01400db518cc9fbba79bcdc25a4e',
         'default_graph_version' => 'v2.20',
     ]);
-
-    var_dump($fb);die;
 
     $helper = $fb->getRedirectLoginHelper();
 
