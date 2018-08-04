@@ -45,5 +45,5 @@ return [
      * The default endpoint that Facebook will redirect to after
      * an authentication attempt.
      */
-    'default_redirect_uri' => '/auth/social/callback',
+    'default_redirect_uri' => 'https://nameless-lowlands-17133.herokuapp.com/public/auth/social/callback',
     ];
