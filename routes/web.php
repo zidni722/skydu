@@ -33,7 +33,7 @@ $router->get('/auth/social', function() {
     $helper = $fb->getRedirectLoginHelper();
 
     $permissions = ['email']; // Optional permissions
-    $loginUrl = $helper->getLoginUrl('https://bit.ly/2OFGMhT', $permissions);
+    $loginUrl = $helper->getLoginUrl('/auth/social/callback', $permissions);
 
     echo '<a href="' . $loginUrl . '">Log in with Facebook!</a>';
 });
