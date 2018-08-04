@@ -16,97 +16,97 @@ $router->get('/', function () use ($router) {
 });
 
 
-//$router->get('/auth/social', function(LinkThrow\LumenFacebookSdk\LumenFacebookSdk $fb) {
-//    $login_link = $fb
-//        ->getRedirectLoginHelper()
-//        ->getLoginUrl('https://bit.ly/2OFGMhT', ['email']);
-//
-//    echo '<a href="' . $login_link . '">Log in with Facebook</a>';
-//});
-$router->get('/auth/social', function() {
-    $fb = new Facebook\Facebook([
-        'app_id' => '232053527445233',
-        'app_secret' => '9e9c01400db518cc9fbba79bcdc25a4e',
-        'default_graph_version' => 'v2.20',
-    ]);
+$router->get('/auth/social', function(LinkThrow\LumenFacebookSdk\LumenFacebookSdk $fb) {
+    $login_link = $fb
+        ->getRedirectLoginHelper()
+        ->getLoginUrl('https://nameless-lowlands-17133.herokuapp.com/public/auth/social/callback', ['email']);
 
-    $helper = $fb->getRedirectLoginHelper();
-
-    $permissions = ['email']; // Optional permissions
-    $loginUrl = $helper->getLoginUrl('https://nameless-lowlands-17133.herokuapp.com/public/auth/social/callback', $permissions);
-
-    echo '<a href="' . $loginUrl . '">Log in with Facebook!</a>';
+    echo '<a href="' . $login_link . '">Log in with Facebook</a>';
 });
-
-//$router->get('/auth/social/callback', function(LinkThrow\LumenFacebookSdk\LumenFacebookSdk $fb) {
-//    try {
-//        $token = $fb->getAccessTokenFromRedirect();
+//$router->get('/auth/social', function() {
+//    $fb = new Facebook\Facebook([
+//        'app_id' => '232053527445233',
+//        'app_secret' => '9e9c01400db518cc9fbba79bcdc25a4e',
+//        'default_graph_version' => 'v2.20',
+//    ]);
 //
-//        if ($token){
-//            echo "jhakjsd";
-//        }
-//    } catch (Facebook\Exceptions\FacebookSDKException $e) {
-//        // Failed to obtain access token
-//        dd($e->getMessage());
-//    }
+//    $helper = $fb->getRedirectLoginHelper();
 //
-//    // $token will be null if the user denied the request
-//    if (! $token) {
-//        // User denied the request
-//        "token has not available";
-//    } else {
-//        var_dump($token);
-//    }
-//    echo "kajhdv";
+//    $permissions = ['email']; // Optional permissions
+//    $loginUrl = $helper->getLoginUrl('https://nameless-lowlands-17133.herokuapp.com/public/auth/social/callback', $permissions);
+//
+//    echo '<a href="' . $loginUrl . '">Log in with Facebook!</a>';
 //});
-$router->get('/auth/social/callback', function() {
-    if (!session_id()) {
-        session_start();
-    }
 
-    $fb = new Facebook\Facebook([
-        'app_id' => '232053527445233',
-        'app_secret' => '9e9c01400db518cc9fbba79bcdc25a4e',
-        'default_graph_version' => 'v2.20',
-    ]);
-
-    $helper = $fb->getRedirectLoginHelper();
-
+$router->get('/auth/social/callback', function(LinkThrow\LumenFacebookSdk\LumenFacebookSdk $fb) {
     try {
-        $accessToken = $helper->getAccessToken();
-    } catch(Facebook\Exceptions\FacebookResponseException $e) {
-        // When Graph returns an error
-        echo 'Graph returned an error: ' . $e->getMessage();
-        exit;
-    } catch(Facebook\Exceptions\FacebookSDKException $e) {
-        // When validation fails or other local issues
-        echo 'Facebook SDK returned an error: ' . $e->getMessage();
-        exit;
-    }
+        $token = $fb->getAccessTokenFromRedirect();
 
-    if (! isset($accessToken)) {
-        if ($helper->getError()) {
-            header('HTTP/1.0 401 Unauthorized');
-            echo "Error: " . $helper->getError() . "\n";
-            echo "Error Code: " . $helper->getErrorCode() . "\n";
-            echo "Error Reason: " . $helper->getErrorReason() . "\n";
-            echo "Error Description: " . $helper->getErrorDescription() . "\n";
-        } else {
-            header('HTTP/1.0 400 Bad Request');
-            echo 'Bad request';
+        if ($token){
+            echo "jhakjsd";
+            echo $token;
         }
-        exit;
+    } catch (Facebook\Exceptions\FacebookSDKException $e) {
+        // Failed to obtain access token
+        dd($e->getMessage());
     }
 
-// Logged in
-    echo '<h3>Access Token</h3>';
-    var_dump($accessToken->getValue());
-
-// The OAuth 2.0 client handler helps us manage access tokens
-    $oAuth2Client = $fb->getOAuth2Client();
-
-// Get the access token metadata from /debug_token
-    $tokenMetadata = $oAuth2Client->debugToken($accessToken);
-    echo '<h3>Metadata</h3>';
-    var_dump($tokenMetadata);
+    // $token will be null if the user denied the request
+    if (! $token) {
+        // User denied the request
+        "token has not available";
+    } else {
+        var_dump($token);
+    }
 });
+//$router->get('/auth/social/callback', function() {
+//    if (!session_id()) {
+//        session_start();
+//    }
+//
+//    $fb = new Facebook\Facebook([
+//        'app_id' => '232053527445233',
+//        'app_secret' => '9e9c01400db518cc9fbba79bcdc25a4e',
+//        'default_graph_version' => 'v2.20',
+//    ]);
+//
+//    $helper = $fb->getRedirectLoginHelper();
+//
+//    try {
+//        $accessToken = $helper->getAccessToken();
+//    } catch(Facebook\Exceptions\FacebookResponseException $e) {
+//        // When Graph returns an error
+//        echo 'Graph returned an error: ' . $e->getMessage();
+//        exit;
+//    } catch(Facebook\Exceptions\FacebookSDKException $e) {
+//        // When validation fails or other local issues
+//        echo 'Facebook SDK returned an error: ' . $e->getMessage();
+//        exit;
+//    }
+//
+//    if (! isset($accessToken)) {
+//        if ($helper->getError()) {
+//            header('HTTP/1.0 401 Unauthorized');
+//            echo "Error: " . $helper->getError() . "\n";
+//            echo "Error Code: " . $helper->getErrorCode() . "\n";
+//            echo "Error Reason: " . $helper->getErrorReason() . "\n";
+//            echo "Error Description: " . $helper->getErrorDescription() . "\n";
+//        } else {
+//            header('HTTP/1.0 400 Bad Request');
+//            echo 'Bad request';
+//        }
+//        exit;
+//    }
+//
+//// Logged in
+//    echo '<h3>Access Token</h3>';
+//    var_dump($accessToken->getValue());
+//
+//// The OAuth 2.0 client handler helps us manage access tokens
+//    $oAuth2Client = $fb->getOAuth2Client();
+//
+//// Get the access token metadata from /debug_token
+//    $tokenMetadata = $oAuth2Client->debugToken($accessToken);
+//    echo '<h3>Metadata</h3>';
+//    var_dump($tokenMetadata);
+//});
