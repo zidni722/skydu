@@ -63,7 +63,7 @@ $router->get('/auth/social/callback', function() {
     if (!session_id()) {
         session_start();
     }
-    
+
     $fb = new Facebook\Facebook([
         'app_id' => '232053527445233',
         'app_secret' => '9e9c01400db518cc9fbba79bcdc25a4e',

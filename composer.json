@@ -11,7 +11,6 @@
         "flipbox/lumen-generator": "^5.6",
         "linkthrow/lumen-facebook-sdk": "~4.1.1",
         "facebook/graph-sdk": "^5.6",
-        "laravel/socialite": "~2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
